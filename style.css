@@ -27,3 +27,12 @@ th
 {
     text-align: center;
 }
+.BlockFilter
+{
+    margin: 5px;
+    font-size: 18px;
+}
+.BlockFilter select
+{
+    margin: 5px;
+}

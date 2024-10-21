@@ -45,8 +45,49 @@
             }
             else
                 echo "Ошибка: ". $conn->error;
-            $conn ->close();
         ?>
+        <div class = "BlockFilter">
+            <b>Фильтрация</b><br>
+            <p>Отдел:
+                <select>
+                    <?php
+                        $sql = "select id, Name from otdel";
+                        if($result = $conn ->query($sql))
+                        {
+                            $rowsCount = $result -> num_rows;
+                            echo "<option disabled selected>Выберите Отдел</option>";
+                            foreach($result as $row)
+                            {
+                                echo "<option value=".$row["id"].">".$row["Name"]."</option>";
+                            }
+                            $result ->free();
+                        }
+                        else
+                            echo "Ошибка: ". $conn->error;
+                    ?>
+                </select>
+            </p>
+            <p>Должность:
+                <select>
+                    <?php
+                        $sql = "select id, Name from doljnost";
+                        if($result = $conn ->query($sql))
+                        {
+                            $rowsCount = $result -> num_rows;
+                            echo "<option disabled selected>Выберите должность</option>";
+                            foreach($result as $row)
+                            {
+                                echo "<option value=".$row["id"].">".$row["Name"]."</option>";
+                            }
+                            $result ->free();
+                        }
+                        else
+                            echo "Ошибка: ". $conn->error;
+                    ?>
+                </select>
+            </p>
+            
+        </div>
     </main>
     <footer>
 
