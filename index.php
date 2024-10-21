@@ -86,7 +86,23 @@
                     ?>
                 </select>
             </p>
+            <p><b>Поиск </b><input type="text"></p>
             
+            <button type = "submit">ТЫК!!!</button>
+        </div>
+        <div class = "BlockAddEdit">
+            <Form>
+                <p>Фамилия: <input type="text" name = "TbFamiliya"></p>
+                <p>Имя: <input type="text" name = "TbImya"></p>
+                <p>Отчество: <input type="text" name = "TbOtchestvo"></p>
+                <p>Серия/номер паспорт: <input type="text" name = "TbPasport"></p>
+                <p>Контактная информация: <input type="text" name = "TbTelephone"></p>
+                <p>Адрес: <input type="text" name = "TbAdress"></p>
+                <p>Отдел: <input type="text" name = "TbOtdel"></p>
+                <p>Должность: <input type="text" name = "TbDoljnost"></p>
+                <p>Размер зарплаты: <input type="text" name = "TbZp"></p>
+                <button type = "submit">Сохранить</button>
+            </Form>
         </div>
     </main>
     <footer>
