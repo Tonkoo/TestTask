@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Хост: 127.0.0.1
--- Время создания: Окт 21 2024 г., 21:42
+-- Время создания: Окт 22 2024 г., 12:28
 -- Версия сервера: 10.4.32-MariaDB
 -- Версия PHP: 8.0.30
 
@@ -77,11 +77,11 @@ CREATE TABLE `sotrudniki` (
   `Firstname` varchar(999) NOT NULL,
   `Middlename` varchar(999) NOT NULL,
   `SeriyaNomerPasport` varchar(999) NOT NULL,
-  `ContactInformation` varchar(10) NOT NULL,
-  `Address` varchar(999) NOT NULL,
+  `ContactInformation` varchar(999) NOT NULL,
+  `Adres` varchar(999) NOT NULL,
   `idOtdela` int(11) NOT NULL,
   `idDoljnosti` int(11) NOT NULL,
-  `SalaryAmount` varchar(999) NOT NULL,
+  `SalaryAmount` decimal(10,2) NOT NULL,
   `DateEmployment` date NOT NULL,
   `Dismissed` bit(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
@@ -90,12 +90,13 @@ CREATE TABLE `sotrudniki` (
 -- Дамп данных таблицы `sotrudniki`
 --
 
-INSERT INTO `sotrudniki` (`id`, `Lastname`, `Firstname`, `Middlename`, `SeriyaNomerPasport`, `ContactInformation`, `Address`, `idOtdela`, `idDoljnosti`, `SalaryAmount`, `DateEmployment`, `Dismissed`) VALUES
-(1, 'Иванов', 'Иван', 'Иванович', '1234 567890', '+7 (000) 0', 'Москва, ул. Ленина, 1', 1, 1, '60000.00', '2024-01-15', b'0'),
-(2, 'Петров', 'Петр', 'Петрович', '2345 678901', '+7 (111) 1', 'Москва, ул. Пушкина, 2', 2, 2, '55000.00', '2024-02-20', b'0'),
-(3, 'Сидоров', 'Сидор', 'Сидорович', '3456 789012', '+7 (222) 2', 'Москва, ул. Чехова, 3', 3, 3, '70000.00', '2024-03-10', b'0'),
-(4, 'Кузнецов', 'Алексей', 'Алексеевич', '4567 890123', '+7 (333) 3', 'Москва, ул. Гоголя, 4', 1, 4, '80000.00', '2024-04-05', b'0'),
-(5, 'Михайлов', 'Анна', 'Сергеевна', '5678 901234', '+7 (444) 4', 'Москва, ул. Толстого, 5', 2, 5, '50000.00', '2024-05-15', b'0');
+INSERT INTO `sotrudniki` (`id`, `Lastname`, `Firstname`, `Middlename`, `SeriyaNomerPasport`, `ContactInformation`, `Adres`, `idOtdela`, `idDoljnosti`, `SalaryAmount`, `DateEmployment`, `Dismissed`) VALUES
+(1, 'Иванов', 'Иван', 'Иванович', '1234 567890', '+7 (000) 000-00-00', 'Москва, ул. Ленина, 1', 1, 1, 60000.00, '2024-01-15', b'0'),
+(2, 'Петров', 'Петр', 'Петрович', '2345 678901', '+7 (111) 111-11-11', 'Москва, ул. Пушкина, 2', 2, 2, 55000.00, '2024-02-20', b'0'),
+(3, 'Сидоров', 'Сидор', 'Сидорович', '3456 789012', '+7 (222) 222-22-22', 'Москва, ул. Чехова, 3', 3, 3, 70000.00, '2024-03-10', b'0'),
+(4, 'Кузнецов', 'Алексей', 'Алексеевич', '4567 890123', '+7 (333) 333-33-33', 'Москва, ул. Гоголя, 4', 1, 4, 80000.00, '2024-04-05', b'0'),
+(5, 'Михайлов', 'Анна', 'Сергеевна', '5678 901234', '+7 (444) 444-44-44', 'Москва, ул. Толстого, 5', 2, 5, 50000.00, '2024-05-15', b'0'),
+(13, 'Воронов', 'Глеб', 'Алексеевич', '1234 567890', '+7 (123) 654-09-87', 'Ярославль', 4, 1, 61000.00, '2024-10-22', b'1');
 
 --
 -- Индексы сохранённых таблиц
@@ -141,7 +142,7 @@ ALTER TABLE `otdel`
 -- AUTO_INCREMENT для таблицы `sotrudniki`
 --
 ALTER TABLE `sotrudniki`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- Ограничения внешнего ключа сохраненных таблиц
