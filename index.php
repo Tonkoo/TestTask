@@ -18,7 +18,22 @@
             {
                 die("Ошибка: " . $conn->connect_error);
             }
-            $sql = "SELECT sotrudniki.id, Lastname, Firstname, Middlename, SeriyaNomerPasport, ContactInformation, Address, otdel.Name as OtdelName, doljnost.Name as DoljnostName, SalaryAmount, DateEmployment, Dismissed FROM sotrudniki join otdel on sotrudniki.idOtdela = otdel.id JOIN doljnost on sotrudniki.idDoljnosti = doljnost.id;";
+            $Otdel = isset($_GET['CbOtdel']) ? $_GET['CbOtdel'] : '';
+            $Doljnost = isset($_GET['CbDlojnost']) ? $_GET['CbDlojnost'] : '';
+            $Poisk = isset($_GET['TbPoisk']) ? $_GET['TbPoisk'] : '';
+            $sql = "SELECT sotrudniki.id, Lastname, Firstname, Middlename, SeriyaNomerPasport, ContactInformation, Address, otdel.Name as OtdelName, doljnost.Name as DoljnostName, SalaryAmount, DateEmployment, Dismissed FROM sotrudniki join otdel on sotrudniki.idOtdela = otdel.id JOIN doljnost on sotrudniki.idDoljnosti = doljnost.id where 1=1";
+            if($Otdel)
+            {
+                $sql .= " and idOtdela = ". $Otdel;
+            }
+            if($Doljnost)
+            {
+                $sql .= " and idDoljnosti = ". $Doljnost;
+            }
+            if($Poisk)
+            {
+                $sql .= " and Lastname like '%". $Poisk ."%' or Firstname like '%". $Poisk ."%' or Middlename like '%". $Poisk ."%'";
+            }
             if($result = $conn -> query($sql))
             {
                 $rowsCount = $result -> num_rows;
@@ -47,48 +62,50 @@
                 echo "Ошибка: ". $conn->error;
         ?>
         <div class = "BlockFilter">
-            <b>Фильтрация</b><br>
-            <p>Отдел:
-                <select>
-                    <?php
-                        $sql = "select id, Name from otdel";
-                        if($result = $conn ->query($sql))
-                        {
-                            $rowsCount = $result -> num_rows;
-                            echo "<option disabled selected>Выберите Отдел</option>";
-                            foreach($result as $row)
+            <form method="GET" action="">
+                <b>Фильтрация</b><br>
+                <p>Отдел:
+                    <select name = "CbOtdel">
+                        <?php
+                            $sql = "select id, Name from otdel";
+                            if($result = $conn ->query($sql))
                             {
-                                echo "<option value=".$row["id"].">".$row["Name"]."</option>";
+                                $rowsCount = $result -> num_rows;
+                                echo "<option disabled selected>Выберите Отдел</option>";
+                                foreach($result as $row)
+                                {
+                                    echo "<option value=".$row["id"].">".$row["Name"]."</option>";
+                                }
+                                $result ->free();
                             }
-                            $result ->free();
-                        }
-                        else
-                            echo "Ошибка: ". $conn->error;
-                    ?>
-                </select>
-            </p>
-            <p>Должность:
-                <select>
-                    <?php
-                        $sql = "select id, Name from doljnost";
-                        if($result = $conn ->query($sql))
-                        {
-                            $rowsCount = $result -> num_rows;
-                            echo "<option disabled selected>Выберите должность</option>";
-                            foreach($result as $row)
+                            else
+                                echo "Ошибка: ". $conn->error;
+                        ?>
+                    </select>
+                </p>
+                <p>Должность:
+                    <select name="CbDlojnost">
+                        <?php
+                            $sql = "select id, Name from doljnost";
+                            if($result = $conn ->query($sql))
                             {
-                                echo "<option value=".$row["id"].">".$row["Name"]."</option>";
+                                $rowsCount = $result -> num_rows;
+                                echo "<option disabled selected>Выберите должность</option>";
+                                foreach($result as $row)
+                                {
+                                    echo "<option value=".$row["id"].">".$row["Name"]."</option>";
+                                }
+                                $result ->free();
                             }
-                            $result ->free();
-                        }
-                        else
-                            echo "Ошибка: ". $conn->error;
-                    ?>
-                </select>
-            </p>
-            <p><b>Поиск </b><input type="text"></p>
-            
-            <button type = "submit">ТЫК!!!</button>
+                            else
+                                echo "Ошибка: ". $conn->error;
+                        ?>
+                    </select>
+                </p>
+                <p><b>Поиск </b><input type="text" name = "TbPoisk"></p>
+                
+                <button type = "submit">ТЫК!!!</button>
+            </form>
         </div>
         <div class = "BlockAddEdit">
             <Form>
