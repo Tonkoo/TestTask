@@ -52,6 +52,22 @@
         mysqli_query($conn, $sqlInsert);
         header('location: index.php');
     }
+    if(isset($_POST['save']))
+    {
+        $id = $_POST['id'];
+        $Lastname = $_POST['TbFamiliya'];
+        $Firstname = $_POST['TbImya'];
+        $Middlename = $_POST['TbOtchestvo'];
+        $SeriyaNomerPasport = $_POST['TbPasport'];
+        $ContactInformation = $_POST['TbTelephone'];
+        $Adres = $_POST['TbAdres'];
+        $Otdel = $_POST['CbAddOtdel'];
+        $Doljnost = $_POST['CbAddDlojnost'];
+        $SalaryAmount = $_POST['TbSalaryAmount'];
+        $sqlUpdate = "update sotrudniki set Lastname = '$Lastname', Firstname = '$Firstname', Middlename = '$Middlename', SeriyaNomerPasport = '$SeriyaNomerPasport', ContactInformation = '$ContactInformation', Adres = '$Adres', idOtdela = '$Otdel', idDoljnosti = '$Doljnost', SalaryAmount = '$SalaryAmount' where id = $id";
+        mysqli_query($conn, $sqlUpdate);
+        header('location: index.php');
+    }
 ?>
 
 <!DOCTYPE html>
