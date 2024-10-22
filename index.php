@@ -35,7 +35,13 @@
         $Doljnost = $row['idDoljnosti'];
         $SalaryAmount = $row['SalaryAmount'];
     }
-
+    if(isset($_GET['dismiss']))
+    {
+        $id = $_GET['dismiss'];
+        $sqlDismiss = "update sotrudniki set Dismissed = 1 where id = $id";
+        mysqli_query($conn, $sqlDismiss);
+        header('location: index.php');
+    }
     if(isset($_POST['add']))
     {
         $Lastname = $_POST['TbFamiliya'];
@@ -87,7 +93,7 @@
             $OtdelFilter = isset($_GET['CbOtdel']) ? $_GET['CbOtdel'] : '';
             $DoljnostFilter = isset($_GET['CbDlojnost']) ? $_GET['CbDlojnost'] : '';
             $Poisk = isset($_GET['TbPoisk']) ? $_GET['TbPoisk'] : '';
-            $sql = "SELECT sotrudniki.id, Lastname, Firstname, Middlename, SeriyaNomerPasport, ContactInformation, Adres, otdel.Name as OtdelName, doljnost.Name as DoljnostName, SalaryAmount, DateEmployment, Dismissed FROM sotrudniki join otdel on sotrudniki.idOtdela = otdel.id JOIN doljnost on sotrudniki.idDoljnosti = doljnost.id where 1=1";
+            $sql = "SELECT sotrudniki.id, Lastname, Firstname, Middlename, SeriyaNomerPasport, ContactInformation, Adres, otdel.Name as OtdelName, doljnost.Name as DoljnostName, SalaryAmount, DateEmployment, CASE when Dismissed=0 THEN 'Не уволен' when Dismissed=1 THEN 'Уволен' END as Dismissed FROM sotrudniki join otdel on sotrudniki.idOtdela = otdel.id JOIN doljnost on sotrudniki.idDoljnosti = doljnost.id where 1=1;";
             if($OtdelFilter)
             {
                 $sql .= " and idOtdela = ". $OtdelFilter;
@@ -119,7 +125,10 @@
                         echo "<td>".$row["SalaryAmount"]."</td>";
                         echo "<td>".$row["DateEmployment"]."</td>";
                         echo "<td>".$row["Dismissed"]."</td>";
-                        echo "<td><a href='index.php?edit=".$row['id']."'>Изменить</a><br><a>Уволить</a></td>";
+                        if($row["Dismissed"] == "Уволен")
+                            echo "<td><a>Изменить</a><br><a>Уволить</a></td>";
+                        else
+                            echo "<td><a href='index.php?edit=".$row['id']."'>Изменить</a><br><a href = 'index.php?dismiss=".$row['id']."'>Уволить</a></td>";
                     echo "</tr>";
                 }
                 echo "</table>";
